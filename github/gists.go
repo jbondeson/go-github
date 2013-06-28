@@ -21,10 +21,10 @@ type GistsService struct {
 
 // Gist represents a GitHub gist
 type Gist struct {
-	ID          int    `json:"id,omitempty"`
+	ID          string `json:"id,omitempty"`
 	Description string `json:"description,omitempty"`
 	Public      bool   `json:"public,omitempty"`
-	Owner       *User  `json:"owner,omitempty"`
+	Owner       *User  `json:"user,omitempty"` //TODO: v3 user => owner
 	//TODO: Files
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 	//TODO: Forks
@@ -35,7 +35,7 @@ type Gist struct {
 //
 // GitHub API docs: http://developer.github.com/v3/gists/#get-a-single-gist
 func (s *GistsService) Get(id int) (*Gist, error) {
-	g := fmt.Sprintf("gists/%n", id)
+	g := fmt.Sprintf("gists/%d", id)
 
 	req, err := s.client.NewRequest("GET", g, nil)
 	if err != nil {
